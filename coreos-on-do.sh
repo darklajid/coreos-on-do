@@ -106,14 +106,14 @@ tar cvzf /var/tmp/modules.tar.gz -C /mnt $(</usr/share/oem/modules)
 umount /mnt
 
 echo "Writing image to disk"
-curl -s --retry 5 --retry-delay 2 http://%CHANNEL%.release.core-os.net/amd64-usr/%VERSION%/coreos_production_image.bin.bz2 | bzip2 -dc | dd of=/dev/vda bs=1M
+curl -s --retry 5 --retry-delay 2 http://%CHANNEL%.release.core-os.net/amd64-usr/%VERSION%/coreos_production_image.bin.bz2 | bzip2 -dc | dd of=/dev/sda bs=1M
 
-blockdev --rereadpt /dev/vda
+blockdev --rereadpt /dev/sda
 
-cgpt repair /dev/vda
-parted -s -- /dev/vda mkpart DOROOT ext4 -500M -0
-ID=$(parted -sm /dev/vda p | grep DOROOT | cut -f1 -d:)
-mkfs.ext4 -L DOROOT /dev/vda${ID}
+cgpt repair /dev/sda
+parted -s -- /dev/sda mkpart DOROOT ext4 -500M -0
+ID=$(parted -sm /dev/sda p | grep DOROOT | cut -f1 -d:)
+mkfs.ext4 -L DOROOT /dev/sda${ID}
 
 mount LABEL=ROOT /mnt
 rsync -av /usr/share/oem/files/ /mnt
