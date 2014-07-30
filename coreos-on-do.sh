@@ -9,7 +9,7 @@ install_kexec()
     if which yum 2>/dev/null; then
         yum install -y kexec-tools cgpt
     elif which apt-get 2>/dev/null; then
-        DEBIAN_FRONTEND=noninteractive apt-get install -y kexec-tools
+        DEBIAN_FRONTEND=noninteractive apt-get install -y kexec-tools cgpt
     fi
 }
 
