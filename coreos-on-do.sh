@@ -7,7 +7,7 @@ VERSION=${VERSION:-current}
 install_kexec()
 {
     if which yum 2>/dev/null; then
-        yum install -y kexec-tools
+        yum install -y kexec-tools cgpt
     elif which apt-get 2>/dev/null; then
         DEBIAN_FRONTEND=noninteractive apt-get install -y kexec-tools
     fi
@@ -129,7 +129,7 @@ cp /etc/resolv.conf /mnt/etc/resolv.conf
 
 export DEBIAN_FRONTEND=noninteractive
 chroot /mnt apt-get update
-chroot /mnt apt-get install -y kexec-tools
+chroot /mnt apt-get install -y kexec-tools cgpt
 
 if [ ! -e /mnt/sbin/init.real ]; then
     mv /mnt/sbin/init{,.real}
