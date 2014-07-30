@@ -40,7 +40,7 @@ Address=$IP
 EOF
 
         if ip route show | grep ^default | grep -q ${IFACE/:/}; then
-            GATEWAY=$(route | grep default | awk '{print $2}')
+            GATEWAY=$(ip route show | grep ^default | awk '{print $3}')
             cat >> $TARGET << EOF
 Gateway=$GATEWAY
 EOF
